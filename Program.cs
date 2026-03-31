@@ -3,6 +3,7 @@
 Console.WriteLine("Simple Task List (v1)");
 Console.WriteLine("Commands: add <text>, list, help, exit");
 
+var tasks = new List<string>();
 var isRunning = true;
 while (isRunning)
 {
@@ -23,7 +24,14 @@ while (isRunning)
             Console.WriteLine("Commands: add <text>, list, help, exit");
             break;
         case "add":
-            Console.WriteLine("Add command will be implemented next.");
+            if (parts.Length < 2 || string.IsNullOrWhiteSpace(parts[1]))
+            {
+                Console.WriteLine("Usage: add <text>");
+                break;
+            }
+
+            tasks.Add(parts[1]);
+            Console.WriteLine($"Added task #{tasks.Count}.");
             break;
         case "list":
             Console.WriteLine("List command will be implemented next.");
