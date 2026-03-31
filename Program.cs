@@ -1,6 +1,6 @@
-using System.Globalization;
+﻿using System.Globalization;
 
-Console.WriteLine("Simple Task List (v1 - conflict A)");
+Console.WriteLine("Simple Task List (v1 - merged conflict practice)");
 Console.WriteLine("Commands: add <text>, list|ls, help|?, exit|quit");
 
 var tasks = new List<string>();
