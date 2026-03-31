@@ -34,7 +34,16 @@ while (isRunning)
             Console.WriteLine($"Added task #{tasks.Count}.");
             break;
         case "list":
-            Console.WriteLine("List command will be implemented next.");
+            if (tasks.Count == 0)
+            {
+                Console.WriteLine("No tasks yet.");
+                break;
+            }
+
+            for (var i = 0; i < tasks.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {tasks[i]}");
+            }
             break;
         case "exit":
             isRunning = false;
