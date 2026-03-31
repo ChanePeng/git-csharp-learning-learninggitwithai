@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 
 Console.WriteLine("Simple Task List (v1 - merged conflict practice)");
-Console.WriteLine("Commands: add <text>, list|ls, help|?, exit|quit");
+Console.WriteLine("Commands: add <text>, list|ls, complete <number>, help|?, exit|quit");
 
-var tasks = new List<string>();
+var tasks = new List<TaskItem>();
 const int MaxTaskLength = 120;
 var isRunning = true;
 while (isRunning)
@@ -23,7 +23,7 @@ while (isRunning)
     {
         case "help":
         case "?":
-            Console.WriteLine("Commands: add <text>, list|ls, help|?, exit|quit");
+            Console.WriteLine("Commands: add <text>, list|ls, complete <number>, help|?, exit|quit");
             break;
         case "add":
             if (parts.Length < 2 || string.IsNullOrWhiteSpace(parts[1]))
@@ -39,7 +39,7 @@ while (isRunning)
                 break;
             }
 
-            tasks.Add(taskText);
+            tasks.Add(new TaskItem(taskText));
             Console.WriteLine($"Added task #{tasks.Count}.");
             break;
         case "list":
@@ -52,8 +52,25 @@ while (isRunning)
 
             for (var i = 0; i < tasks.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {tasks[i]}");
+                var marker = tasks[i].IsDone ? "[x]" : "[ ]";
+                Console.WriteLine($"{i + 1}. {marker} {tasks[i].Text}");
             }
+            break;
+        case "complete":
+            if (parts.Length < 2 || !int.TryParse(parts[1], out var taskNumber))
+            {
+                Console.WriteLine("Usage: complete <number>");
+                break;
+            }
+
+            if (taskNumber < 1 || taskNumber > tasks.Count)
+            {
+                Console.WriteLine("Task number is out of range.");
+                break;
+            }
+
+            tasks[taskNumber - 1].IsDone = true;
+            Console.WriteLine($"Completed task #{taskNumber}.");
             break;
         case "exit":
         case "quit":
@@ -63,4 +80,16 @@ while (isRunning)
             Console.WriteLine("Unknown command. Type 'help' to see available commands.");
             break;
     }
+}
+
+internal sealed class TaskItem
+{
+    public TaskItem(string text)
+    {
+        Text = text;
+    }
+
+    public string Text { get; }
+
+    public bool IsDone { get; set; }
 }
