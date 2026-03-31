@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 
 Console.WriteLine("Simple Task List (v1)");
-Console.WriteLine("Commands: add <text>, list, help, exit");
+Console.WriteLine("Commands: add <text>, list|ls, help|?, exit|quit");
 
 var tasks = new List<string>();
 const int MaxTaskLength = 120;
@@ -22,7 +22,8 @@ while (isRunning)
     switch (command)
     {
         case "help":
-            Console.WriteLine("Commands: add <text>, list, help, exit");
+        case "?":
+            Console.WriteLine("Commands: add <text>, list|ls, help|?, exit|quit");
             break;
         case "add":
             if (parts.Length < 2 || string.IsNullOrWhiteSpace(parts[1]))
@@ -42,6 +43,7 @@ while (isRunning)
             Console.WriteLine($"Added task #{tasks.Count}.");
             break;
         case "list":
+        case "ls":
             if (tasks.Count == 0)
             {
                 Console.WriteLine("No tasks yet.");
@@ -54,6 +56,7 @@ while (isRunning)
             }
             break;
         case "exit":
+        case "quit":
             isRunning = false;
             break;
         default:
