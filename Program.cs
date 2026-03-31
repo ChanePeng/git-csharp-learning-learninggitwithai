@@ -4,6 +4,7 @@ Console.WriteLine("Simple Task List (v1)");
 Console.WriteLine("Commands: add <text>, list, help, exit");
 
 var tasks = new List<string>();
+const int MaxTaskLength = 120;
 var isRunning = true;
 while (isRunning)
 {
@@ -30,7 +31,14 @@ while (isRunning)
                 break;
             }
 
-            tasks.Add(parts[1]);
+            var taskText = parts[1].Trim();
+            if (taskText.Length > MaxTaskLength)
+            {
+                Console.WriteLine($"Task is too long. Keep it under {MaxTaskLength} characters.");
+                break;
+            }
+
+            tasks.Add(taskText);
             Console.WriteLine($"Added task #{tasks.Count}.");
             break;
         case "list":
